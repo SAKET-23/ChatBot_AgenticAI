@@ -1,9 +1,9 @@
-name: Sync to Hugging Face Hub
+name: Sync to Hugging Face Space
 on:
   push:
     branches: [main]
 
-  #to run this workflow manually from the Action tab
+  # to run this workflow manually from the Actions tab 
   workflow_dispatch:
 
 jobs:
@@ -11,14 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with: 
+        with:
           fetch-depth: 0
           lfs: false
-      
+          
       - name: Ignore large files
-        run: git filter-branch --index-filter 'git rm -rf --cached --ignore-unmatch "Rag_Documents/layout-parser-paper.pdf"' HEAD
-      
+        run : git filter-branch --index-filter 'git rm -rf --cached --ignore-unmatch "Rag_Documents/layout-parser-paper.pdf"' HEAD
+
       - name: Push to hub
-        env: 
+        env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run : git push --force https://Saket23:$HF_TOKEN@huggingface.co/spaces/Saket23/ChatBot_AgenticAI main
